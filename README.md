@@ -1,1 +1,7 @@
-# coalMiners_evissw_rlin49_thamidurr
+# Half-Quick by coalMiners
+Eviss Wu - Project Manager
+Ricky Lin - Dev
+Thamidur Rahmen - Dev
+
+Description of website/app: Wiki of coal mining.
+
