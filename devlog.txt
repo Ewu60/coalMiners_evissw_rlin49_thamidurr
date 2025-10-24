@@ -3,7 +3,7 @@ RickyL -- 2025-10-22 10:37\n
 - Finished Readme \n
 - Helped started on design document\n
 
-EvisW -- 2025-10-22 8:42\n
+EvissW -- 2025-10-22 8:42\n
 - Finished the design document \n
 - Created the flag\n
 
@@ -13,5 +13,7 @@ ThamidurR -- 2025-10-22 9:06\n
 
 INITIAL DD REVIEW - - 2025-10-23 11:25\n
 - Link CSS to html in the diagram
+- Use format for structured database
 - Our maps are clear and our navbar is intuitive
-- individual pages should have access to login/logout and the user should be able to browse the pages without loging in
+- individual pages should have access to login/logout and the user should be able to browse the pages without logging in
+- Removed profile from our users database
