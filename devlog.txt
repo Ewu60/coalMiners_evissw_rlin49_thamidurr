@@ -16,6 +16,9 @@ EvissW -- 2025-10-27 9:42\n
 ThamidurR -- 2025-10-27 10:30\n
 - Reviewed the design document \n
 
+RickyL -- 2025-10-27 10:53\n
+- Reviewed the design document \n
+
 Summery of Design Document Changes:
 - Added UML Notation for the arrows \n
 - Created tables for data base organization \n
