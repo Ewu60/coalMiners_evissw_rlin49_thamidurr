@@ -29,3 +29,12 @@ INITIAL DD REVIEW - - 2025-10-23 11:25\n
 - Our maps are clear and our navbar is intuitive
 - individual pages should have access to login/logout and the user should be able to browse the pages without logging in
 - Removed profile from our users database
+
+ThamidurR -- 2025-10-27 23:30\n
+- Fixed UML notation and the arrows on the map \n
+
+EvissW -- 2025-10-28 00:16\n
+- Rewrote the steps and made it more detailed \n
+
+RickyL -- 2025-10-28 06:00\n
+- Reviewed the design document and uploaded the new design document to github \n
