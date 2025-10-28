@@ -10,11 +10,11 @@ Ensure that the operating system you are on can use python in terminal, and supp
 
 # Launch Codes
 
-Ensure that you have a method to run Flask. If you do not, here is how to do it:
-python -m venv ~/pyVM 
-cd ~/pyVM/ 
-. bin/activate
-pip install flask
-Now navigate to the location you cloned your coalMiners repository to. You can now
-python3 __init__.py
+Ensure that you have a method to run Flask. If you do not, here is how to do it:\n
+python -m venv ~/pyVM\n
+cd ~/pyVM/ \n
+. bin/activate\n
+pip install flask\n
+Now navigate to the location you cloned your coalMiners repository to. You can now\n
+python3 __init__.py\n
 to run.
