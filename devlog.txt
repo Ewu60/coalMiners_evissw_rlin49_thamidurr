@@ -1,29 +1,29 @@
-RickyL -- 2025-10-22 10:37\n
+RickyL -- 2025-10-22 22:37\n
 - Created Devlog\n
 - Finished Readme \n
 - Helped started on design document\n
 
-EvissW -- 2025-10-22 8:42\n
+EvissW -- 2025-10-22 20:42\n
 - Finished the design document \n
 - Created the flag\n
 
-ThamidurR -- 2025-10-22 9:06\n
+ThamidurR -- 2025-10-22 21:06\n
 - Reviewed the doc and fixed mistakes\n
 
-EvissW -- 2025-10-27 9:42\n
+EvissW -- 2025-10-27 21:42\n
 - Reviewed the design document \n
 
-ThamidurR -- 2025-10-27 10:30\n
+ThamidurR -- 2025-10-27 22:30\n
 - Reviewed the design document \n
 
-RickyL -- 2025-10-27 10:53\n
+RickyL -- 2025-10-27 22:53\n
 - Reviewed the design document \n
 
 Summery of Design Document Changes:
 - Added UML Notation for the arrows \n
 - Created tables for data base organization \n
 
-INITIAL DD REVIEW - - 2025-10-23 11:25\n
+INITIAL DD REVIEW - - 2025-10-23 23:25\n
 - Link CSS to html in the diagram
 - Use format for structured database
 - Our maps are clear and our navbar is intuitive
