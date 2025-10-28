@@ -38,3 +38,7 @@ EvissW -- 2025-10-28 00:16\n
 
 RickyL -- 2025-10-28 06:00\n
 - Reviewed the design document and uploaded the new design document to github \n
+
+DD REVIEW - - 2025-10-28 00:25\n
+- Fixed UML notation and map arrows
+- Rewrote steps and made it more detailed
