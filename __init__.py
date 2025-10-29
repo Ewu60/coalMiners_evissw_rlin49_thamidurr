@@ -46,7 +46,7 @@ def get_pass(username):
     for i in range(len(usernames)):
         if usernames[i] == username:
             return(passwords[i])
-    return('')
+    return("temp")
 
 #==========================================================
 
