@@ -49,5 +49,8 @@ RickyL -- 2025-10-29 06:00\n
 EvissW -- 2025-10-28 21:00\n
 - Begin on html and helped fix bugs. Added Launch Code and install guide \n
 
+EvissW -- 2025-10-28 10:54\n
+- Creation of database and began working on helper functions\n
+
 ThamidurR -- 2025-10-29 9:30\n
 - Started to work on database and helped fix bugs. \n
