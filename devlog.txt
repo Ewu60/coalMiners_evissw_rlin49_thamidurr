@@ -43,7 +43,6 @@ DD REVIEW - - 2025-10-28 00:25\n
 - Fixed UML notation and map arrows
 - Rewrote steps and made it more detailed
 
-
 RickyL -- 2025-10-29 06:00\n
 - Added __init__.py and a functional app. /n
 
