@@ -3,6 +3,9 @@ from flask import render_template
 import sqlite3
 import csv
 import os
+from flask import request           #facilitate form submission
+from flask import session           #facilitate cookies
+import testmod0                     #"home-rolled" module for basic exploration
 
 
 app = Flask("__main__")
