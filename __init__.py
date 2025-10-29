@@ -32,12 +32,17 @@ for i in range(len(usernames)):
 for i in range(len(links)):
     c.execute("INSERT INTO page VALUES (?, ?, ?)", (links[i], names[i], content[i]))
 
-#==========================================================
+def add_account(username, password, bio=""):
+    usernames.append(username)
+    passwords.append(password)
+    bios.append(bio)
 
-print("\n========== LIST OF ALL STUDENTS ==========")
-for row in c.execute("SELECT user FROM account"):
-    print(row[0])
-print("========== END OF STUDENT LIST ==========\n")
+def add_page(link, name, content=""):
+    links.append(link)
+    names.append(name)
+    content.append(content)
+
+#==========================================================
 
 @app.route("/")
 def homepage():
