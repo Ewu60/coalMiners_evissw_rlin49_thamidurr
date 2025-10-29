@@ -42,6 +42,12 @@ def add_page(link, name, content=""):
     names.append(name)
     content.append(content)
 
+def get_pass(username):
+    for i in range(len(usernames)):
+        if usernames[i] == username:
+            return(passwords[i])
+    return('')
+
 #==========================================================
 
 @app.route("/")
