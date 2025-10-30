@@ -54,3 +54,6 @@ EvissW -- 2025-10-28 10:54\n
 
 ThamidurR -- 2025-10-29 9:30\n
 - Started to work on database and helped fix bugs. \n
+
+RickyL -- 2025-10-29 23:00\n
+- Reviewed data base code for bugs \n
