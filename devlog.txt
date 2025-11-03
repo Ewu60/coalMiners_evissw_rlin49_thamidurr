@@ -57,3 +57,16 @@ ThamidurR -- 2025-10-29 9:30\n
 
 RickyL -- 2025-10-29 23:00\n
 - Reviewed data base code for bugs \n
+
+EvissW -- 2025-11-03 6:00\n
+- Completed login html template \n
+
+RickyL -- 2025-11-03 6:30\n
+- Reviewed template code for bugs \n
+
+ThamidurR -- 2025-11-03 7:00\n
+- Reviewed template code for bugs \n
+
+
+
+
