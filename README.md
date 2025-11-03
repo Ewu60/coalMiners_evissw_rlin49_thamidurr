@@ -12,7 +12,6 @@ Ensure that the operating system you are on can use python in terminal, git, and
 You should get the coalMiners folder within your current directory. It will contain the tools needed to launch the program.
 
 # Launch Codes
-
 Ensure that you have a method to run Flask. If you do not, here is how to do it:
 `python -m venv ~/pyVM`  
 `cd ~/pyVM/`  
