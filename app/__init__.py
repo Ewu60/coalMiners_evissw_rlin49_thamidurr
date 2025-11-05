@@ -3,7 +3,9 @@ from flask import render_template
 import sqlite3
 import csv
 import os
-
+from flask import request
+from flask import session
+from flask import redirect, url_for
 
 app = Flask("__main__")
 
@@ -49,8 +51,28 @@ def get_pass(username):
     return("temp")
 
 #==========================================================
+app = Flask(__name__)    #create Flask object
 
-@app.route("/")
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+@app.route("/", methods=['GET', 'POST'])
+def disp_loginpage():
+    return render_template( 'login.html' )
+def index():
+    if name in session:
+        return f'Logged in as {session["username"]}'
+    return 'You are not logged in'
+@app.route("/auth", methods = ['GET', 'POST'])
+def authenticate():
+    user = request.form["username"]
+    return render_template('response.html', username = user, method = request.method)
+
+
+@app.route("/exit")
+def exit():
+    session.pop("username", None)
+    return redirect(url_for('disp_loginpage'))
+
 def homepage():
     return "this is homepage"
 
