@@ -51,21 +51,23 @@ def get_pass(username):
     return("temp")
 
 #==========================================================
-app = Flask(__name__)    #create Flask object
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route("/", methods=['GET', 'POST'])
+def index():
+    if name in usernames:
+        return f'Logged in as {usernames["username"]}'
+    return 'You are not logged in'
+
+@app.route("/login", methods=['GET', 'POST'])
 def disp_loginpage():
     return render_template( 'login.html' )
-def index():
-    if name in session:
-        return f'Logged in as {session["username"]}'
-    return 'You are not logged in'
+
 @app.route("/auth", methods = ['GET', 'POST'])
 def authenticate():
     user = request.form["username"]
-    return render_template('response.html', username = user, method = request.method)
+    return render_template('page.html', username = user, method = request.method)
 
 
 @app.route("/exit")
