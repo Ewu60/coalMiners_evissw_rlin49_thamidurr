@@ -10,7 +10,7 @@ from flask import redirect, url_for
 app = Flask("__main__")
 
 #==========================================================
-DB_FILE = "data.db"
+DB_FILE = "static/data.db"
 os.remove(DB_FILE)
 db = sqlite3.connect(DB_FILE)
 c = db.cursor()
@@ -72,9 +72,6 @@ def authenticate():
 def exit():
     session.pop("username", None)
     return redirect(url_for('disp_loginpage'))
-
-def homepage():
-    return "this is homepage"
 
 app.debug = True
 app.run()
