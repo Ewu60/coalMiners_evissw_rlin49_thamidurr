@@ -7,71 +7,89 @@ from flask import request
 from flask import session
 from flask import redirect, url_for
 
-app = Flask("__main__")
+app = Flask(__name__)
 
 #==========================================================
 DB_FILE = "static/data.db"
-os.remove(DB_FILE)
-db = sqlite3.connect(DB_FILE)
-c = db.cursor()
+if os.path.exists(DB_FILE):
+    os.remove(DB_FILE)
+if not os.path.exists(DB_FILE):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("CREATE TABLE account (user TEXT, password TEXT, bios TEXT)")
+    c.execute("CREATE TABLE page (link TEXT, name TEXT, content TEXT)")
 
-usernames = ["ricky", "ewu"]
-passwords = ["rickyp", "ewup"]
-bios = ["rickys", "ewus"]
+    usernames = ["ricky", "ewu"]
+    passwords = ["rickyp", "ewup"]
+    bios = ["rickys", "ewus"]
 
-links = []
-names = []
-content = []
+    for i in range(len(usernames)):
+        c.execute("INSERT INTO account VALUES (?, ?, ?)", (usernames[i], passwords[i], bios[i]))
+    links = []
+    names = []
+    content = []
 
-c.execute("DROP TABLE IF EXISTS account")
-c.execute("DROP TABLE IF EXISTS page")
 
-c.execute("CREATE TABLE account (user TEXT, password TEXT, bios TEXT)")
-c.execute("CREATE TABLE page (link TEXT, name TEXT, content TEXT)")
-
-for i in range(len(usernames)):
-    c.execute("INSERT INTO account VALUES (?, ?, ?)", (usernames[i], passwords[i], bios[i]))
-for i in range(len(links)):
-    c.execute("INSERT INTO page VALUES (?, ?, ?)", (links[i], names[i], content[i]))
+    for i in range(len(links)):
+        c.execute("INSERT INTO page VALUES (?, ?, ?)", (links[i], names[i], content[i]))
+    db.commit()
+    db.close()
+#==========================================================
 
 def add_account(username, password, bio=""):
     usernames.append(username)
     passwords.append(password)
     bios.append(bio)
 
-def add_page(link, name, content=""):
+def add_page(link, name, text=""):
     links.append(link)
     names.append(name)
-    content.append(content)
+    content.append(text)
 
 def get_pass(username):
-    for i in range(len(usernames)):
-        if usernames[i] == username:
-            return(passwords[i])
-    return("temp")
-
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT password FROM account WHERE user = ?", (username,))
+    result = c.fetchone()
+    db.close()
+    if result:
+        return result[0]
+    return None
 #==========================================================
-app = Flask(__name__)    #create Flask object
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route("/", methods=['GET', 'POST'])
-def disp_loginpage():
-    return render_template( 'login.html' )
 def index():
-    if name in session:
-        return f'Logged in as {session["username"]}'
-    return 'You are not logged in'
+    if "username" in session:
+        return f"Logged in as {session['username']}<br><a href='/logout'>Logout</a>"
+    return redirect(url_for("login"))
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        stored_pass = get_pass(username)
+        if stored_pass and stored_pass == password:
+            session["username"] = username
+            return redirect(url_for("index"))
+        else:
+            return render_template("login.html", error="Invalid username or password.")
+    return render_template("login.html")
+
 @app.route("/auth", methods = ['GET', 'POST'])
 def authenticate():
     user = request.form["username"]
-    return render_template('response.html', username = user, method = request.method)
+    return render_template('page.html', username = user, method = request.method)
 
 
-@app.route("/exit")
-def exit():
+@app.route("/logout")
+def logout():
     session.pop("username", None)
-    return redirect(url_for('disp_loginpage'))
+    return redirect(url_for("login"))
 
-app.debug = True
-app.run()
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
