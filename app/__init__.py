@@ -40,12 +40,7 @@ def add_account(username, password, bio=""):
     c.execute("INSERT INTO account VALUES (?, ?, ?)", (username, password, bio))
     db.commit()
     db.close()
-def show_all_users():
-    db = sqlite3.connect(DB_FILE)
-    c = db.cursor()
-    c.execute("SELECT * FROM account")
-    print("Users in DB:", c.fetchall())
-    db.close()
+
 
 def add_page(link, name, text=""):
     db = sqlite3.connect(DB_FILE)
@@ -87,7 +82,6 @@ def login():
         password = request.form["password"]
 
         stored_pass = get_pass(username)
-        print("Login attempt:", username, password, "stored:", stored_pass)
 
         if stored_pass and stored_pass == password:
             session["username"] = username
@@ -106,7 +100,6 @@ def register():
             return render_template("register.html", error="Username already exists!")
 
         add_account(username, password)
-        show_all_users()
         return redirect(url_for("login"))
 
     return render_template("register.html")
