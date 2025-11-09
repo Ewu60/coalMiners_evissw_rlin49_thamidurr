@@ -166,7 +166,13 @@ def logout():
 def homepage():
     if "username" not in session:
         return redirect(url_for("login"))
-    return render_template("homepage.html")
+    return render_template("homepage.html", username=session["username"])
+
+@app.route("/profile")
+def profile():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    return render_template("profile.html", username=session["username"], blogarea="")
 if __name__ == "__main__":
     app.debug = True
     app.run()
