@@ -85,7 +85,7 @@ def login():
 
         if stored_pass and stored_pass == password:
             session["username"] = username
-            return redirect(url_for("index"))
+            return redirect(url_for("homepage"))
         else:
             return render_template("login.html", error="Invalid username or password.")
     return render_template("login.html")
@@ -115,6 +115,11 @@ def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
 
+@app.route("/homepage")
+def homepage():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    return render_template("homepage.html")
 if __name__ == "__main__":
     app.debug = True
     app.run()
