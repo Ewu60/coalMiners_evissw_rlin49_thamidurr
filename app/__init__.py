@@ -34,6 +34,7 @@ if not os.path.exists(DB_FILE):
     db.close()
 #==========================================================
 
+
 def add_account(username, password, bio=""):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
@@ -41,13 +42,13 @@ def add_account(username, password, bio=""):
     db.commit()
     db.close()
 
-
 def add_page(link, name, text=""):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("INSERT INTO page (link, name, content) VALUES (?, ?, ?)", (link, name, text))
+    c.execute("INSERT OR IGNORE INTO page (link, name, content) VALUES (?, ?, ?)", (link, name, text))
     db.commit()
     db.close()
+
 def get_pass(username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
@@ -65,6 +66,52 @@ def get_all_pages():
     pages = c.fetchall()
     db.close()
     return pages
+
+def get_page(link):
+    """Return (link, name, content) or None"""
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT link, name, content FROM page WHERE link = ?", (link,))
+    row = c.fetchone()
+    db.close()
+    return row
+
+def update_page(link, new_text, editor=None):
+    now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT content FROM page WHERE link = ?", (link,))
+    row = c.fetchone()
+    old_content = row[0] if row and row[0] is not None else ""
+
+    meta = ""
+    if editor:
+        meta = f"\n\n-- edited by {editor} on {now} --"
+
+    if old_content.strip() == "":
+        combined = new_text + meta
+    else:
+        combined = new_text + meta + "\n\n---\n\n" + old_content
+
+    if row:
+        c.execute("UPDATE page SET content = ? WHERE link = ?", (combined, link))
+    else:
+        name = link.replace('-', ' ').title()
+        c.execute("INSERT INTO page (link, name, content) VALUES (?, ?, ?)", (link, name, combined))
+    db.commit()
+    db.close()
+
+def get_current_content(full_content):
+    if not full_content:
+        return ""
+    parts = full_content.split("\n---\n", 1)
+    return parts[0].strip()
+
+def get_history_parts(full_content):
+    if not full_content:
+        return []
+    parts = [p.strip() for p in full_content.split("\n---\n")]
+    return parts
 #==========================================================
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
