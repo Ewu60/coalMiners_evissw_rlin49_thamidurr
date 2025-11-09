@@ -4,12 +4,13 @@
     <title>Profile</title>
 </head>
 <body>
-<button>Logout</button>
-<h1>{{username}}</h1>
-<p>{{bio (we can remove this)}}</p>
+<p>Logged in as {{ username }} | <a href="/logout">Logout</a></p>
+<p><a href="/homepage">Go to Homepage</a></p>
+
+<h1>{{ username }}</h1>
 <table>
     <tbody>
-        {{blogarea}}
+        {{ blogarea }}
     </tbody>
 </table>
 </body>
