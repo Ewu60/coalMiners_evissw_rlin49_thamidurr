@@ -84,6 +84,14 @@ def get_all_pages():
     db.close()
     return pages
 
+def get_pages_by_author(username):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT link, name FROM page WHERE author = ?", (username,))
+    rows = c.fetchall()
+    db.close()
+    return rows
+
 def get_page(link):
     """Return (link, name, content) or None"""
     db = sqlite3.connect(DB_FILE)
@@ -238,7 +246,16 @@ def edit_page(link):
 def profile():
     if "username" not in session:
         return redirect(url_for("login"))
-    return render_template("profile.html", username=session["username"], blogarea="")
+    username = session["username"]
+    pages = get_pages_by_author(username)
+    blogarea = ""
+    if pages:
+        for link, name in pages:
+            blogarea += f"<tr><td><a href='/page/{link}'>{name}</a></td></tr>"
+    else:
+        blogarea = "<tr><td>No blogs created yet.</td></tr>"
+    return render_template("profile.html", username=username, blogarea=blogarea)
+
 
 if __name__ == "__main__":
     app.debug = True
