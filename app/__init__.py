@@ -25,7 +25,7 @@ if not os.path.exists(DB_FILE):
     names = []
     content = []
     for i in range(len(links)):
-        c.execute("INSERT INTO page VALUES (?, ?, ?)", (links[i], names[i], content[i]))
+        c.execute("INSERT INTO page VALUES (?, ?, ?)", (links[i], names[i], content[i], "anonymous"))
     db.commit()
     db.close()
 #==========================================================
@@ -65,18 +65,6 @@ def add_page(link, name, text="", username=None):
 
     db.commit()
     db.close()
-
-@app.route("/new-blog", methods=["GET", "POST"])
-def new_blog():
-    if "username" not in session:
-        return redirect(url_for("login"))
-    if request.method == "POST":
-        link = request.form["link"].strip().replace(" ", "-").lower()
-        name = request.form["name"].strip()
-        content = request.form["content"].strip()
-        add_page(link, name, content)
-        return redirect(url_for("profile"))
-    return render_template("new_blog.html")
 
 def get_pass(username):
     db = sqlite3.connect(DB_FILE)
