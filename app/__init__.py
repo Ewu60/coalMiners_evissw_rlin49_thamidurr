@@ -183,14 +183,15 @@ def view_page(link):
         return "Page not found", 404
     name = page[1]
     content = page[2]
-    # Fetch author info
+    entries = get_history_parts(content)  # Split content history
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT author FROM page WHERE link = ?", (link,))
     author_row = c.fetchone()
     db.close()
     author = author_row[0] if author_row else ""
-    return render_template("page.html", name=name, content=content, author=author, username=session.get("username"))
+    # Pass 'entries', 'link' to template
+    return render_template("page.html", name=name, entries=entries, author=author, username=session.get("username"), link=page[0])
 
 @app.route("/homepage")
 def homepage():
