@@ -16,24 +16,19 @@ if not os.path.exists(DB_FILE):
     c = db.cursor()
     c.execute("CREATE TABLE account (user TEXT, password TEXT, bios TEXT)")
     c.execute("CREATE TABLE page (link TEXT, name TEXT, content TEXT)")
-
     usernames = ["ricky", "ewu"]
     passwords = ["rickyp", "ewup"]
     bios = ["rickys", "ewus"]
-
     for i in range(len(usernames)):
         c.execute("INSERT INTO account VALUES (?, ?, ?)", (usernames[i], passwords[i], bios[i]))
     links = []
     names = []
     content = []
-
-
     for i in range(len(links)):
         c.execute("INSERT INTO page VALUES (?, ?, ?)", (links[i], names[i], content[i]))
     db.commit()
     db.close()
 #==========================================================
-
 
 def add_account(username, password, bio=""):
     db = sqlite3.connect(DB_FILE)
@@ -89,22 +84,15 @@ def get_page(link):
     return row
 
 def update_page(link, new_text, editor=None):
-    now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT content FROM page WHERE link = ?", (link,))
     row = c.fetchone()
     old_content = row[0] if row and row[0] is not None else ""
-
-    meta = ""
-    if editor:
-        meta = f"\n\n-- edited by {editor} on {now} --"
-
     if old_content.strip() == "":
-        combined = new_text + meta
+        combined = new_text
     else:
-        combined = new_text + meta + "\n\n---\n\n" + old_content
-
+        combined = new_text + "\n\n---\n\n" + old_content
     if row:
         c.execute("UPDATE page SET content = ? WHERE link = ?", (combined, link))
     else:
@@ -139,9 +127,7 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-
         stored_pass = get_pass(username)
-
         if stored_pass and stored_pass == password:
             session["username"] = username
             return redirect(url_for("homepage"))
@@ -154,13 +140,10 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-
         if get_pass(username) is not None:
             return render_template("register.html", error="Username already exists!")
-
         add_account(username, password)
         return redirect(url_for("login"))
-
     return render_template("register.html")
 
 @app.route("/auth", methods = ['GET', 'POST'])
@@ -168,17 +151,26 @@ def authenticate():
     user = request.form["username"]
     return render_template('page.html', username = user, method = request.method)
 
-
 @app.route("/logout")
 def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
 
+@app.route("/page/<link>")
+def view_page(link):
+    page = get_page(link)
+    if not page:
+        return "Page not found", 404
+    name = page[1]
+    content = page[2]
+    return render_template("page.html", name=name, content=content)
+
 @app.route("/homepage")
 def homepage():
     if "username" not in session:
         return redirect(url_for("login"))
-    return render_template("homepage.html", username=session["username"])
+    pages = get_all_pages()  # Fetch pages from DB
+    return render_template("homepage.html", username=session["username"], pages=pages)
 
 @app.route("/newpage", methods=["GET", "POST"])
 def new_page():
@@ -197,6 +189,7 @@ def profile():
     if "username" not in session:
         return redirect(url_for("login"))
     return render_template("profile.html", username=session["username"], blogarea="")
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
