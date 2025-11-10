@@ -185,8 +185,8 @@ def newpage():
     if "username" not in session:
         return redirect(url_for("login"))
     if request.method == "POST":
-        link = request.form["link"].strip().replace(" ", "-").lower()
         name = request.form["name"].strip()
+        link = name.replace(" ", "-").lower()
         content = request.form["content"].strip()
         add_page(link, name, content)
         return redirect(url_for("homepage"))
