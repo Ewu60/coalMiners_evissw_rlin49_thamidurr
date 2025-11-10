@@ -6,7 +6,12 @@
 <body>
   <p><a href="/homepage">Back to Home</a></p>
   <h1>{{ name }}</h1>
-  <div>{{ content }}</div>
+  {% for entry in entries %}
+    <div>{{ entry }}</div>
+    {% if not loop.last %}
+      <div style="margin: 1em 0;">----</div>
+    {% endif %}
+  {% endfor %}
   {% if author == username %}
     <a href="/edit/{{ link }}"><button type="button">Edit</button></a>
   {% endif %}

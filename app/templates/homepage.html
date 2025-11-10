@@ -11,17 +11,22 @@
     <a href="/profile">Go to Profile</a> |
     <a href="/newpage">New Blog</a>
 </p>
-<ul>
+
+{% if pages %}
     {% for link, name, content, author in pages %}
-        <li>
+        <div>
             <a href="/page/{{ link }}">{{ name }}</a>
             {% if author == username %}
                 <a href="/edit/{{ link }}"><button type="button">Edit</button></a>
             {% endif %}
-        </li>
-    {% else %}
-        <li>No pages yet</li>
+        </div>
+        {% if not loop.last %}
+            <hr>
+        {% endif %}
     {% endfor %}
-</ul>
+{% else %}
+    <p>No pages yet</p>
+{% endif %}
+
 </body>
 </html>
