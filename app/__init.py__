@@ -37,10 +37,32 @@ def add_account(username, password, bio=""):
     db.commit()
     db.close()
 
-def add_page(link, name, text=""):
+def add_page(link, name, text="", username=None):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("INSERT OR IGNORE INTO page (link, name, content) VALUES (?, ?, ?)", (link, name, text))
+
+    c.execute("PRAGMA table_info(page)")
+    cols = [r[1] for r in c.fetchall()]
+    if 'author' not in cols:
+        try:
+            c.execute("ALTER TABLE page ADD COLUMN author TEXT DEFAULT 'anonymous'")
+        except sqlite3.OperationalError:
+            pass
+
+    if username is None:
+        try:
+            username = session.get('username')  # works when called inside a request
+        except RuntimeError:
+            username = None
+
+    if not username:
+        username = 'anonymous'
+
+    c.execute(
+        "INSERT OR IGNORE INTO page (link, name, content, author) VALUES (?, ?, ?, ?)",
+        (link, name, text, username)
+    )
+
     db.commit()
     db.close()
 
