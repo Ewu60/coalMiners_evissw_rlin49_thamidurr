@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Page</title>
+</head>
+<body>
+    <p><a href="/homepage">HomePage</a></p>
+    <h1>Edit "{{ name }}"</h1>
+    <form method="post" action="/edit/{{ link }}">
+        <label for="content">Content:</label><br>
+        <textarea id="content" name="content" rows="10" cols="50" required>{{ content }}</textarea><br><br>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

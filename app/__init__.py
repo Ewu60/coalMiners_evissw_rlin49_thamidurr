@@ -204,6 +204,20 @@ def new_page():
         return redirect(url_for("homepage"))
     return render_template("newpage.html", username=session["username"])
 
+@app.route("/edit/<link>", methods=["GET", "POST"])
+def edit_page(link):
+    if "username" not in session:
+        return redirect(url_for("login"))
+    page = get_page(link)
+    if not page:
+        return "Page not found", 404
+    name, content = page[1], page[2]
+    if request.method == "POST":
+        new_content = request.form["content"].strip()
+        update_page(link, new_content, editor=session["username"])
+        return redirect(url_for("view_page", link=link))
+    return render_template("editpage.html", name=name, content=content, link=link, username=session["username"])
+
 @app.route("/profile")
 def profile():
     if "username" not in session:

@@ -11,11 +11,11 @@
     <a href="/profile">Go to Profile</a> |
     <a href="/newpage">New Blog</a>
 </p>
-
 <ul>
     {% for link, name, content, author in pages %}
         <li>
             <a href="/page/{{ link }}">{{ name }}</a>
+            <a href="/edit/{{ link }}"><button type="button">Edit</button></a>
         </li>
     {% else %}
         <li>No pages yet</li>
