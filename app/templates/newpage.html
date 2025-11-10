@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>New Blog</title>
+</head>
+<body>
+<p><a href="/homepage">HomePage</a></p>
+<h1>Create a New Blog</h1>
+<form method="post" action="/new-blog">
+    <label for="link">Blog Link:</label><br>
+    <input type="text" id="link" name="link" required><br><br>
+    <label for="name">Blog Title:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+    <label for="content">Content:</label><br>
+    <textarea id="content" name="content" rows="10" cols="50" required></textarea><br><br>
+    <button type="submit">Create Blog</button>
+</form>
+</body>
+</html>
+

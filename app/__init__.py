@@ -49,6 +49,18 @@ def add_page(link, name, text=""):
     db.commit()
     db.close()
 
+@app.route("/new-blog", methods=["GET", "POST"])
+def new_blog():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    if request.method == "POST":
+        link = request.form["link"].strip().replace(" ", "-").lower()
+        name = request.form["name"].strip()
+        content = request.form["content"].strip()
+        add_page(link, name, content)
+        return redirect(url_for("profile"))
+    return render_template("new_blog.html")
+
 def get_pass(username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
@@ -167,6 +179,18 @@ def homepage():
     if "username" not in session:
         return redirect(url_for("login"))
     return render_template("homepage.html", username=session["username"])
+
+@app.route("/newpage", methods=["GET", "POST"])
+def newpage():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    if request.method == "POST":
+        link = request.form["link"].strip().replace(" ", "-").lower()
+        name = request.form["name"].strip()
+        content = request.form["content"].strip()
+        add_page(link, name, content)
+        return redirect(url_for("homepage"))
+    return render_template("newpage.html", username=session["username"])
 
 @app.route("/profile")
 def profile():
