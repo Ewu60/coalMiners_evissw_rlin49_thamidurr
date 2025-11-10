@@ -67,6 +67,12 @@ RickyL -- 2025-11-03 6:30\n
 ThamidurR -- 2025-11-03 7:00\n
 - Reviewed template code for bugs \n
 
+ThamidurR -- 2025-11-08 18:00\n
+- Added database functions \n
+
+ThamidurR -- 2025-11-09 20:00\n
+- Finished database \n
+
 External Read
 e REVIEW - - 2025-11-05 07:00\n
 - Added code blocks and added more specified details to the instructions.
