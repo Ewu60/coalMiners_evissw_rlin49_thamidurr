@@ -15,7 +15,7 @@ if not os.path.exists(DB_FILE):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("CREATE TABLE account (user TEXT, password TEXT, bios TEXT)")
-    c.execute("CREATE TABLE page (link TEXT, name TEXT, content TEXT)")
+    c.execute("CREATE TABLE page (link TEXT, name TEXT, content TEXT, author TEXT)")
     usernames = ["ricky", "ewu"]
     passwords = ["rickyp", "ewup"]
     bios = ["rickys", "ewus"]
@@ -115,11 +115,21 @@ def update_page(link, new_text, editor=None):
         combined = new_text
     else:
         combined = new_text + "\n\n---\n\n" + old_content
+
+    if editor is None:
+        try:
+            editor = session.get('username')
+        except RuntimeError:
+            editor = None
+    if not editor:
+        editor = 'anonymous'
+
     if row:
-        c.execute("UPDATE page SET content = ? WHERE link = ?", (combined, link))
+        c.execute("UPDATE page SET content = ?, author = ? WHERE link = ?", (combined, editor, link))
     else:
         name = link.replace('-', ' ').title()
-        c.execute("INSERT INTO page (link, name, content) VALUES (?, ?, ?)", (link, name, combined))
+        c.execute("INSERT INTO page (link, name, content, author) VALUES (?, ?, ?, ?)", (link, name, combined, editor))
+
     db.commit()
     db.close()
 
