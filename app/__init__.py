@@ -181,7 +181,7 @@ def homepage():
     return render_template("homepage.html", username=session["username"])
 
 @app.route("/newpage", methods=["GET", "POST"])
-def newpage():
+def new_page():
     if "username" not in session:
         return redirect(url_for("login"))
     if request.method == "POST":
