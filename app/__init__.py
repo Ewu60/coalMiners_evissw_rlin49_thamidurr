@@ -183,7 +183,14 @@ def view_page(link):
         return "Page not found", 404
     name = page[1]
     content = page[2]
-    return render_template("page.html", name=name, content=content)
+    # Fetch author info
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT author FROM page WHERE link = ?", (link,))
+    author_row = c.fetchone()
+    db.close()
+    author = author_row[0] if author_row else ""
+    return render_template("page.html", name=name, content=content, author=author, username=session.get("username"))
 
 @app.route("/homepage")
 def homepage():
@@ -212,6 +219,14 @@ def edit_page(link):
     if not page:
         return "Page not found", 404
     name, content = page[1], page[2]
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT author FROM page WHERE link = ?", (link,))
+    author_row = c.fetchone()
+    db.close()
+    author = author_row[0] if author_row else ""
+    if author != session["username"]:
+        return "You do not have permission to edit this page.", 403
     if request.method == "POST":
         new_content = request.form["content"].strip()
         update_page(link, new_content, editor=session["username"])

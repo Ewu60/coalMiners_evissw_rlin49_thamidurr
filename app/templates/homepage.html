@@ -15,7 +15,9 @@
     {% for link, name, content, author in pages %}
         <li>
             <a href="/page/{{ link }}">{{ name }}</a>
-            <a href="/edit/{{ link }}"><button type="button">Edit</button></a>
+            {% if author == username %}
+                <a href="/edit/{{ link }}"><button type="button">Edit</button></a>
+            {% endif %}
         </li>
     {% else %}
         <li>No pages yet</li>
